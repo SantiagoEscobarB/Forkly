@@ -4,7 +4,7 @@
 
 | Capa                     | Tecnología                          | Notas                                      |
 | ------------------------ | ------------------------------------|--------------------------------------------|
-| **Frontend**             | TypeScript + React                  | SPA.                                       |
+| **Frontend**             | TypeScript + React                  | Usando Vite                                |
 | **Backend**              | .NET 10 (C#) — ASP.NET Core Web API | API REST.                                  |
 | **Base de datos**        | SQL Server                          | Motor relacional.                          |
 | **Acceso a datos / ORM** | Entity Framework Core               | Modelado y migraciones.                    |
