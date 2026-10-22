@@ -1,9 +1,10 @@
+using Forkly.Api.Models.Enums;
+
 namespace Forkly.Api.Models.Users
 {
     public class Comensal : Usuario
     {
         public bool PerfilPublico { get; set; } = true;
-        //Vamos a usar 1 para un usuario normal y 2 para un usuario premium
-        public int Nivel { get; set; } = 1;
+        public NivelComensal Nivel { get; set; } = NivelComensal.NORMAL;
     }
 }

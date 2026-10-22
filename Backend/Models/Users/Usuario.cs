@@ -8,7 +8,8 @@ namespace Forkly.Api.Models.Users
     // nombreUsuario -> UserName, segundoFactor -> TwoFactorEnabled
     public abstract class Usuario : IdentityUser
     {
+        public string NombreCompleto { get; set; } = string.Empty;
         public DateOnly FechaNacimiento { get; set; }
-        public EstadoCuenta Estado { get; set; } = EstadoCuenta.ACTIVA;
+        public EstadoCuenta Estado { get; set; } = EstadoCuenta.VERIFICADA;
     }
 }
