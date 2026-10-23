@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { mensajesDeError } from '../services/api';
 import { registro } from '../services/authService';
 import type { AuthResponse, RegistroRequest } from '../types/auth';
+import { FECHA_MINIMA, fechaLocalHoy, MENSAJE_USERNAME, PATRON_USERNAME } from '../utils/validaciones';
 import ErrorMessage from './ErrorMessage';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
@@ -12,12 +13,6 @@ const datosIniciales: RegistroRequest = {
     email: '',
     password: '',
     fechaNacimiento: '',
-};
-
-// Fecha local en "yyyy-MM-dd" (toISOString usa UTC y en Colombia daría mañana desde las 7 p. m.)
-const fechaLocalHoy = () => {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 };
 
 // Mismas reglas que el PasswordValidator por defecto de Identity
@@ -69,15 +64,15 @@ const RegisterForm = ({ onExito }: RegisterFormProps) => {
             <InputField label='Nombre completo' required maxLength={100} pattern='.*\S.*'
                 title='El nombre no puede estar vacío' placeholder='Juan Atehortua' autoComplete='name'
                 value={datos.nombreCompleto} onChange={(e) => actualizar('nombreCompleto', e.target.value)} />
-            <InputField label='Nombre de usuario' required pattern='[a-zA-Z0-9._\-]+'
-                title='Solo letras, números, puntos, guiones y guion bajo' placeholder='juanatehortua'
+            <InputField label='Nombre de usuario' required pattern={PATRON_USERNAME}
+                title={MENSAJE_USERNAME} placeholder='juanatehortua'
                 autoComplete='username'
                 value={datos.userName} onChange={(e) => actualizar('userName', e.target.value)} />
             <InputField label='Correo electrónico' type='email' required placeholder='juan@ejemplo.com'
                 autoComplete='email'
                 value={datos.email} onChange={(e) => actualizar('email', e.target.value)} />
             {/* "hoy" se refresca al enfocar por si la pestaña quedó abierta pasada la medianoche */}
-            <InputField label='Fecha de nacimiento' type='date' required min='1900-01-01' max={hoy}
+            <InputField label='Fecha de nacimiento' type='date' required min={FECHA_MINIMA} max={hoy}
                 onFocus={() => setHoy(fechaLocalHoy())}
                 value={datos.fechaNacimiento} onChange={(e) => actualizar('fechaNacimiento', e.target.value)} />
             <div className='flex flex-col gap-3'>

@@ -16,4 +16,9 @@ namespace Forkly.Api.Service
     {
         public CuentaBloqueadaException() : base("Tu cuenta está bloqueada.") { }
     }
+
+    public class GoogleTokenInvalidoException : Exception
+    {
+        public GoogleTokenInvalidoException() : base("No se pudo verificar tu cuenta de Google. Intenta de nuevo.") { }
+    }
 }
