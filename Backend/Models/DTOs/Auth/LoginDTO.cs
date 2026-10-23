@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Forkly.Api.Models.DTOs
+namespace Forkly.Api.Models.DTOs.Auth
 {
     public class LoginDTO
     {

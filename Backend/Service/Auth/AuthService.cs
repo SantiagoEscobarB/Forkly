@@ -1,5 +1,6 @@
 using Forkly.Api.Interface;
-using Forkly.Api.Models.DTOs;
+using Forkly.Api.Models.DTOs.Auth;
+using Forkly.Api.Models.DTOs.Usuarios;
 using Forkly.Api.Models.Enums;
 using Forkly.Api.Models.Users;
 using Google.Apis.Auth;
@@ -9,17 +10,22 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
-namespace Forkly.Api.Service
+namespace Forkly.Api.Service.Auth
 {
     public class AuthService : IAuthService
     {
         private readonly UserManager<Usuario> _userManager;
+        private readonly IVerificacionService _verificacionService;
         private readonly IConfiguration _config;
+        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(UserManager<Usuario> userManager, IConfiguration config)
+        public AuthService(UserManager<Usuario> userManager, IVerificacionService verificacionService,
+            IConfiguration config, ILogger<AuthService> logger)
         {
             _userManager = userManager;
+            _verificacionService = verificacionService;
             _config = config;
+            _logger = logger;
         }
 
         public async Task<AuthResponseDTO> Registro(RegistroDTO dto)
@@ -35,6 +41,7 @@ namespace Forkly.Api.Service
             var result = await _userManager.CreateAsync(comensal, dto.Password);
             if (!result.Succeeded) throw new RegistroException(result.Errors);
 
+            await EnviarCodigoVerificacion(comensal);
             return CrearRespuesta(comensal);
         }
 
@@ -79,6 +86,8 @@ namespace Forkly.Api.Service
                 UserName = dto.UserName.Trim(),
                 Email = payload.Email,
                 EmailConfirmed = payload.EmailVerified,
+                // Si Google ya verificó el correo no hace falta pedir código
+                Estado = payload.EmailVerified ? EstadoCuenta.VERIFICADA : EstadoCuenta.NO_VERIFICADA,
                 FechaNacimiento = dto.FechaNacimiento!.Value
             };
 
@@ -93,7 +102,22 @@ namespace Forkly.Api.Service
                 throw new RegistroException(vinculo.Errors);
             }
 
+            if (comensal.Estado == EstadoCuenta.NO_VERIFICADA) await EnviarCodigoVerificacion(comensal);
             return CrearRespuesta(comensal);
+        }
+
+        // Si el correo falla, la cuenta ya quedó creada: el usuario puede pedir otro código
+        // desde la página de verificación, así que no se interrumpe el registro.
+        private async Task EnviarCodigoVerificacion(Comensal comensal)
+        {
+            try
+            {
+                await _verificacionService.EnviarCodigo(comensal);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "No se pudo enviar el código de verificación a {Email}", comensal.Email);
+            }
         }
 
         private async Task<GoogleJsonWebSignature.Payload> ValidarTokenGoogle(string idToken)
@@ -126,7 +150,17 @@ namespace Forkly.Api.Service
             if (payload.EmailVerified && await _userManager.FindByEmailAsync(payload.Email) is Comensal existente)
             {
                 var vinculo = await _userManager.AddLoginAsync(existente, LoginGoogleInfo(payload));
-                if (vinculo.Succeeded) return existente;
+                if (vinculo.Succeeded)
+                {
+                    // Google confirma que el correo es suyo, así que ya no necesita el código
+                    if (existente.Estado == EstadoCuenta.NO_VERIFICADA)
+                    {
+                        existente.EmailConfirmed = true;
+                        existente.Estado = EstadoCuenta.VERIFICADA;
+                        await _userManager.UpdateAsync(existente);
+                    }
+                    return existente;
+                }
             }
 
             return null;

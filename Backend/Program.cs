@@ -1,14 +1,19 @@
 using Forkly.Api.DAO;
 using Forkly.Api.Interface;
+using Forkly.Api.Models.Configuracion;
 using Forkly.Api.Models.Users;
-using Forkly.Api.Service;
+using Forkly.Api.Service.Auth;
+using Forkly.Api.Service.Email;
+using Forkly.Api.Service.Verificacion;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 
 //Conexion a la base de datos
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +31,22 @@ builder.Services.AddOpenApi();
 
 //Inyeccion de dependencias
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IVerificacionService, VerificacionService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+//Correo (la contraseña del SMTP va en user-secrets: Email:Contrasena)
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.Seccion));
+
+//Limite de reenvios del codigo de verificacion: 3 cada 10 minutos por usuario
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.AddPolicy("reenvioCodigo", context => RateLimitPartition.GetFixedWindowLimiter(
+        context.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? context.Connection.RemoteIpAddress?.ToString() ?? "",
+        _ => new FixedWindowRateLimiterOptions { PermitLimit = 3, Window = TimeSpan.FromMinutes(10) }));
+    options.OnRejected = (context, token) => new ValueTask(context.HttpContext.Response.WriteAsJsonAsync(
+        new { message = "Ya pediste varios códigos. Espera unos minutos antes de pedir otro." }, token));
+});
 
 //Gestion de usuarios
 builder.Services.AddIdentity<Usuario, IdentityRole>(options =>
@@ -78,6 +99,8 @@ else
 
 app.UseAuthentication();
 app.UseAuthorization();
+// Después de la autenticación para poder limitar por usuario
+app.UseRateLimiter();
 
 app.MapControllers();
 

@@ -1,11 +1,11 @@
 import { useState, type FormEvent } from 'react';
-import { mensajesDeError } from '../services/api';
-import { registro } from '../services/authService';
-import type { AuthResponse, RegistroRequest } from '../types/auth';
-import { FECHA_MINIMA, fechaLocalHoy, MENSAJE_USERNAME, PATRON_USERNAME } from '../utils/validaciones';
-import ErrorMessage from './ErrorMessage';
-import InputField from './InputField';
-import SubmitButton from './SubmitButton';
+import { mensajesDeError } from '../../services/api';
+import { registro } from '../../services/authService';
+import type { AuthResponse, RegistroRequest } from '../../types/auth';
+import { FECHA_MINIMA, fechaLocalHoy, MENSAJE_USERNAME, PATRON_USERNAME } from '../../utils/validaciones';
+import ErrorMessage from '../ui/ErrorMessage';
+import InputField from '../ui/InputField';
+import SubmitButton from '../ui/SubmitButton';
 
 const datosIniciales: RegistroRequest = {
     nombreCompleto: '',

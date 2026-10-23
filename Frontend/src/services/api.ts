@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'forkly_token';
+import { borrarSesion, EVENTO_SESION_EXPIRADA, leerToken } from './sesionStorage';
 
 // status 0 = no hubo respuesta (red caída, backend apagado)
 export class ApiError extends Error {
@@ -23,7 +23,7 @@ const leerCuerpo = async (respuesta: Response): Promise<unknown> => {
 };
 
 export const apiFetch = async <T>(ruta: string, opciones: RequestInit = {}): Promise<T> => {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = leerToken();
     const headers = new Headers(opciones.headers);
     if (opciones.body && !(opciones.body instanceof FormData) && !headers.has('Content-Type'))
         headers.set('Content-Type', 'application/json');
@@ -39,7 +39,11 @@ export const apiFetch = async <T>(ruta: string, opciones: RequestInit = {}): Pro
     const cuerpo = await leerCuerpo(respuesta);
 
     if (!respuesta.ok) {
-        if (respuesta.status === 401 && token) localStorage.removeItem(TOKEN_KEY);
+        // Token vencido o inválido: se cierra la sesión y se avisa al SesionProvider
+        if (respuesta.status === 401 && token) {
+            borrarSesion();
+            window.dispatchEvent(new Event(EVENTO_SESION_EXPIRADA));
+        }
         const mensaje = (cuerpo as { message?: string } | undefined)?.message ?? `Error ${respuesta.status}`;
         throw new ApiError(respuesta.status, mensaje, cuerpo);
     }
@@ -47,8 +51,8 @@ export const apiFetch = async <T>(ruta: string, opciones: RequestInit = {}): Pro
     return cuerpo as T;
 };
 
-export const guardarToken = (token: string) => localStorage.setItem(TOKEN_KEY, token);
-export const borrarToken = () => localStorage.removeItem(TOKEN_KEY);
+export const apiPost = <T>(ruta: string, datos?: unknown) =>
+    apiFetch<T>(ruta, { method: 'POST', body: datos === undefined ? undefined : JSON.stringify(datos) });
 
 const MENSAJE_GENERAL = 'Ocurrió un error. Intenta de nuevo más tarde.';
 

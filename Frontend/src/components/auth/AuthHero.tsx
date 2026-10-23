@@ -1,4 +1,4 @@
-import Logo from './Logo';
+import Logo from '../ui/Logo';
 
 // Placeholder: luego se traerán los valores reales del backend
 const estadisticas = [

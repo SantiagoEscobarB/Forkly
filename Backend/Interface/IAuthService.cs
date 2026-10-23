@@ -1,4 +1,4 @@
-using Forkly.Api.Models.DTOs;
+using Forkly.Api.Models.DTOs.Auth;
 
 namespace Forkly.Api.Interface
 {

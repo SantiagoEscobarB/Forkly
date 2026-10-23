@@ -1,4 +1,4 @@
-namespace Forkly.Api.Models.DTOs
+namespace Forkly.Api.Models.DTOs.Auth
 {
     // Si la cuenta de Google ya está en Forkly se devuelve la sesión.
     // Si no, RequiereRegistro = true y se devuelven los datos de Google

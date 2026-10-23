@@ -1,10 +1,10 @@
 import { useState, type FormEvent } from 'react';
-import { mensajesDeError } from '../services/api';
-import { login } from '../services/authService';
-import type { AuthResponse, LoginRequest } from '../types/auth';
-import ErrorMessage from './ErrorMessage';
-import InputField from './InputField';
-import SubmitButton from './SubmitButton';
+import { mensajesDeError } from '../../services/api';
+import { login } from '../../services/authService';
+import type { AuthResponse, LoginRequest } from '../../types/auth';
+import ErrorMessage from '../ui/ErrorMessage';
+import InputField from '../ui/InputField';
+import SubmitButton from '../ui/SubmitButton';
 
 interface LoginFormProps {
     onExito: (respuesta: AuthResponse) => void;

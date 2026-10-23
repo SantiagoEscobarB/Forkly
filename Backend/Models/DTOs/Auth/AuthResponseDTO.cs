@@ -1,4 +1,6 @@
-namespace Forkly.Api.Models.DTOs
+using Forkly.Api.Models.DTOs.Usuarios;
+
+namespace Forkly.Api.Models.DTOs.Auth
 {
     public class AuthResponseDTO
     {

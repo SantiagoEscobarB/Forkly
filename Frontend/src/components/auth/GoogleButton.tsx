@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { cargarGoogle, GOOGLE_CLIENT_ID } from '../services/googleAuth';
+import { cargarGoogle, GOOGLE_CLIENT_ID } from '../../services/googleAuth';
 
 // Temporal mientras no exista el Client ID de Google Cloud Console: abre la página de
 // Google igual, que mostrará su propio error (falta client_id). Con el Client ID

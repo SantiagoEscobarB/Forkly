@@ -1,7 +1,7 @@
 using Forkly.Api.Models.Enums;
 using Forkly.Api.Models.Users;
 
-namespace Forkly.Api.Models.DTOs
+namespace Forkly.Api.Models.DTOs.Usuarios
 {
     // Lo que el frontend recibe de un comensal (Frontend/src/types/usuario.ts).
     // Nunca se devuelve la entidad para no exponer PasswordHash, SecurityStamp, etc.

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Forkly.Api.Service
+namespace Forkly.Api.Service.Auth
 {
     public class RegistroException : Exception
     {

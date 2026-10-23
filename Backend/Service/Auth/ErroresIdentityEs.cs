@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Forkly.Api.Service
+namespace Forkly.Api.Service.Auth
 {
     // Traduce los mensajes de Identity que el frontend muestra al registrarse
     public class ErroresIdentityEs : IdentityErrorDescriber

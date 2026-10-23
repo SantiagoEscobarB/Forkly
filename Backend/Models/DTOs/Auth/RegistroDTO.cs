@@ -1,17 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Forkly.Api.Models.DTOs
+namespace Forkly.Api.Models.DTOs.Auth
 {
-    // Datos que Google no entrega y que Usuario necesita
-    public class GoogleRegistroDTO : IValidatableObject
+    public class RegistroDTO : IValidatableObject
     {
-        [Required]
-        public string IdToken { get; set; } = string.Empty;
         [Required]
         [MaxLength(100)]
         public string NombreCompleto { get; set; } = string.Empty;
         [Required]
         public string UserName { get; set; } = string.Empty;
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+        [Required]
+        public string Password { get; set; } = string.Empty;
+        // Nullable para que [Required] rechace el campo ausente en vez de recibir 0001-01-01
         [Required]
         public DateOnly? FechaNacimiento { get; set; }
 

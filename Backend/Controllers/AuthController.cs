@@ -1,6 +1,6 @@
 using Forkly.Api.Interface;
-using Forkly.Api.Models.DTOs;
-using Forkly.Api.Service;
+using Forkly.Api.Models.DTOs.Auth;
+using Forkly.Api.Service.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forkly.Api.Controllers

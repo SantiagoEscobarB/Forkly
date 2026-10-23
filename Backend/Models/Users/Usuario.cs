@@ -10,6 +10,6 @@ namespace Forkly.Api.Models.Users
     {
         public string NombreCompleto { get; set; } = string.Empty;
         public DateOnly FechaNacimiento { get; set; }
-        public EstadoCuenta Estado { get; set; } = EstadoCuenta.VERIFICADA;
+        public EstadoCuenta Estado { get; set; } = EstadoCuenta.NO_VERIFICADA;
     }
 }
