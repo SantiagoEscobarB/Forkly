@@ -26,5 +26,29 @@ namespace Forkly.Api.Service.Email
 
             return new EmailMensaje(destinatario, "Tu código de verificación de Forkly", html, texto);
         }
+
+        public static EmailMensaje RecuperarContrasena(string destinatario, string nombre, string enlace, int minutosVigencia)
+        {
+            var nombreSeguro = WebUtility.HtmlEncode(nombre);
+            var enlaceSeguro = WebUtility.HtmlEncode(enlace);
+
+            var html = $"""
+                <div style="background:#140C07;padding:32px;font-family:Arial,sans-serif;color:#ffffff">
+                  <div style="max-width:480px;margin:0 auto;background:#2A1A0E;border-radius:24px;padding:32px">
+                    <h1 style="margin:0 0 8px;color:#E07A1F">FORKLY</h1>
+                    <p style="margin:0 0 24px;color:#A88B6E">Hola, {nombreSeguro}. Recibimos una solicitud para restablecer la contraseña de tu cuenta.</p>
+                    <p style="margin:0 0 24px;text-align:center">
+                      <a href="{enlaceSeguro}" style="display:inline-block;background:#E07A1F;color:#140C07;font-weight:bold;text-decoration:none;padding:14px 28px;border-radius:999px">Crear contraseña nueva</a>
+                    </p>
+                    <p style="margin:0;color:#A88B6E;font-size:14px">El enlace sirve una sola vez y vence en {minutosVigencia} minutos. Si no pediste este cambio, ignora este correo: tu contraseña seguirá igual.</p>
+                  </div>
+                </div>
+                """;
+
+            var texto = $"Hola, {nombre}. Para crear una contraseña nueva en Forkly abre este enlace: {enlace} . " +
+                        $"Sirve una sola vez y vence en {minutosVigencia} minutos. Si no pediste este cambio, ignora este correo.";
+
+            return new EmailMensaje(destinatario, "Restablece tu contraseña de Forkly", html, texto);
+        }
     }
 }

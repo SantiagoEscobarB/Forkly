@@ -2,9 +2,12 @@ import { useState, type FormEvent } from 'react';
 import { mensajesDeError } from '../../services/api';
 import { registro } from '../../services/authService';
 import type { AuthResponse, RegistroRequest } from '../../types/auth';
-import { FECHA_MINIMA, fechaLocalHoy, MENSAJE_USERNAME, PATRON_USERNAME } from '../../utils/validaciones';
+import {
+    cumpleReglasContrasena, FECHA_MINIMA, fechaLocalHoy, MENSAJE_USERNAME, PATRON_USERNAME,
+} from '../../utils/validaciones';
 import ErrorMessage from '../ui/ErrorMessage';
 import InputField from '../ui/InputField';
+import ReglasContrasena from '../ui/ReglasContrasena';
 import SubmitButton from '../ui/SubmitButton';
 
 const datosIniciales: RegistroRequest = {
@@ -14,16 +17,6 @@ const datosIniciales: RegistroRequest = {
     password: '',
     fechaNacimiento: '',
 };
-
-// Mismas reglas que el PasswordValidator por defecto de Identity
-// (solo cuenta letras y números ASCII, igual que el backend).
-const reglasContrasena = [
-    { texto: 'Mínimo 6 caracteres', cumple: (p: string) => p.length >= 6 },
-    { texto: 'Una mayúscula', cumple: (p: string) => /[A-Z]/.test(p) },
-    { texto: 'Una minúscula', cumple: (p: string) => /[a-z]/.test(p) },
-    { texto: 'Un número', cumple: (p: string) => /[0-9]/.test(p) },
-    { texto: 'Un símbolo', cumple: (p: string) => /[^a-zA-Z0-9]/.test(p) },
-];
 
 interface RegisterFormProps {
     onExito: (respuesta: AuthResponse) => void;
@@ -38,7 +31,7 @@ const RegisterForm = ({ onExito }: RegisterFormProps) => {
     const actualizar = (campo: keyof RegistroRequest, valor: string) =>
         setDatos((prev) => ({ ...prev, [campo]: valor }));
 
-    const contrasenaValida = reglasContrasena.every((regla) => regla.cumple(datos.password));
+    const contrasenaValida = cumpleReglasContrasena(datos.password);
 
     const enviar = async (e: FormEvent) => {
         e.preventDefault();
@@ -79,17 +72,7 @@ const RegisterForm = ({ onExito }: RegisterFormProps) => {
                 <InputField label='Contraseña' type='password' required placeholder='••••••••'
                     autoComplete='new-password' aria-describedby='reglas-contrasena'
                     value={datos.password} onChange={(e) => actualizar('password', e.target.value)} />
-                <ul id='reglas-contrasena' className='grid grid-cols-2 gap-x-4 gap-y-1 px-2 text-sm'>
-                    {reglasContrasena.map((regla) => {
-                        const cumple = regla.cumple(datos.password);
-                        return (
-                            <li key={regla.texto} className={cumple ? 'text-green-400' : 'text-texto-suave'}>
-                                <span aria-hidden='true'>{cumple ? '✓' : '•'}</span> {regla.texto}
-                                {cumple && <span className='sr-only'> (cumplido)</span>}
-                            </li>
-                        );
-                    })}
-                </ul>
+                <ReglasContrasena id='reglas-contrasena' contrasena={datos.password} />
             </div>
             <ErrorMessage errores={errores} />
             <SubmitButton disabled={cargando || !contrasenaValida}>

@@ -1,3 +1,43 @@
 @Forkly.Api_HostAddress = http://localhost:5286
 
+### H01.04 · Iniciar sesión (acepta nombre de usuario o correo)
+POST {{Forkly.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "userName": "juanatehortua",
+  "password": "Clave123!"
+}
+
+### H01.04 · Mantener la sesión: renueva el token (pega el token de la respuesta anterior)
+GET {{Forkly.Api_HostAddress}}/api/auth/sesion
+Authorization: Bearer <token>
+
+### H01.06 · Solicitar el enlace de recuperación (responde 204 exista o no el correo)
+POST {{Forkly.Api_HostAddress}}/api/recuperacion/solicitar
+Content-Type: application/json
+
+{
+  "email": "juan@ejemplo.com"
+}
+
+### H01.06 · Validar el enlace (id y token salen del enlace que aparece en la terminal)
+POST {{Forkly.Api_HostAddress}}/api/recuperacion/validar
+Content-Type: application/json
+
+{
+  "usuarioId": "<id>",
+  "token": "<token>"
+}
+
+### H01.06 · Restablecer la contraseña (410 si el enlace ya se usó o venció)
+POST {{Forkly.Api_HostAddress}}/api/recuperacion/restablecer
+Content-Type: application/json
+
+{
+  "usuarioId": "<id>",
+  "token": "<token>",
+  "nuevaContrasena": "NuevaClave456!"
+}
+
 ###

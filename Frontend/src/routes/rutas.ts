@@ -4,6 +4,9 @@ export const RUTAS = {
     auth: '/auth',
     verificarCorreo: '/verificar-correo',
     inicio: '/',
+    // Públicas: no dependen del estado de la sesión (AppRoutes)
+    recuperarContrasena: '/recuperar-contrasena',
+    restablecerContrasena: '/restablecer-contrasena', // el enlace del correo apunta aquí
 } as const;
 
 export type Ruta = typeof RUTAS[keyof typeof RUTAS];
