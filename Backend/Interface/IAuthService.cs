@@ -6,6 +6,7 @@ namespace Forkly.Api.Interface
     {
         Task<AuthResponseDTO> Registro(RegistroDTO dto);
         Task<AuthResponseDTO?> Login(LoginDTO dto);
+        Task<AuthResponseDTO?> RenovarSesion(string usuarioId);
         Task<GoogleAuthResponseDTO> LoginGoogle(GoogleLoginDTO dto);
         Task<AuthResponseDTO> RegistroGoogle(GoogleRegistroDTO dto);
     }
