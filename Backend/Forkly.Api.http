@@ -40,4 +40,35 @@ Content-Type: application/json
   "nuevaContrasena": "NuevaClave456!"
 }
 
+### H01.09 · Catálogo de opciones del perfil (todas requieren el token)
+GET {{Forkly.Api_HostAddress}}/api/perfil/opciones
+Authorization: Bearer <token>
+
+### H01.09 · Perfil del usuario (estado, paso actual, seleccionadas y vector)
+GET {{Forkly.Api_HostAddress}}/api/perfil
+Authorization: Bearer <token>
+
+### H01.09 · Guardar el avance del asistente
+PUT {{Forkly.Api_HostAddress}}/api/perfil/avance
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "paso": 2,
+  "opciones": ["cocina.italiana", "cocina.japonesa"]
+}
+
+### H01.09 y H01.10 · Confirmar o editar el perfil (calcula el vector de preferencias)
+PUT {{Forkly.Api_HostAddress}}/api/perfil
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "opciones": ["cocina.italiana", "cocina.japonesa", "ambiente.casual", "precio.2", "dieta.vegetariana", "restriccion.sin-gluten"]
+}
+
+### H01.09 · Omitir la configuración (perfil vacío)
+POST {{Forkly.Api_HostAddress}}/api/perfil/omitir
+Authorization: Bearer <token>
+
 ###

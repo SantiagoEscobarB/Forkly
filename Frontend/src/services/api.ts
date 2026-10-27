@@ -54,6 +54,9 @@ export const apiFetch = async <T>(ruta: string, opciones: RequestInit = {}): Pro
 export const apiPost = <T>(ruta: string, datos?: unknown) =>
     apiFetch<T>(ruta, { method: 'POST', body: datos === undefined ? undefined : JSON.stringify(datos) });
 
+export const apiPut = <T>(ruta: string, datos?: unknown) =>
+    apiFetch<T>(ruta, { method: 'PUT', body: datos === undefined ? undefined : JSON.stringify(datos) });
+
 const MENSAJE_GENERAL = 'Ocurrió un error. Intenta de nuevo más tarde.';
 
 // Convierte cualquier error en una lista de mensajes para mostrar.
