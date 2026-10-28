@@ -22,6 +22,371 @@ namespace Forkly.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Forkly.Api.Models.Perfil.OpcionPerfil", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Detalle")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<int>("Orden")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
+                    b.ToTable("OpcionesPerfil");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.colombiana",
+                            Nombre = "Colombiana",
+                            Orden = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.mexicana",
+                            Nombre = "Mexicana",
+                            Orden = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.italiana",
+                            Nombre = "Italiana",
+                            Orden = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.japonesa",
+                            Nombre = "Japonesa",
+                            Orden = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.china",
+                            Nombre = "China",
+                            Orden = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.peruana",
+                            Nombre = "Peruana",
+                            Orden = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.mediterranea-arabe",
+                            Nombre = "Mediterránea y árabe",
+                            Orden = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.hamburguesas-rapida",
+                            Nombre = "Hamburguesas y comida rápida",
+                            Orden = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.pizza",
+                            Nombre = "Pizza",
+                            Orden = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.mariscos",
+                            Nombre = "Mariscos",
+                            Orden = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.parrilla-carnes",
+                            Nombre = "Parrilla y carnes",
+                            Orden = 11
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.vegetariana-vegana",
+                            Nombre = "Vegetariana y vegana",
+                            Orden = 12
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.saludable",
+                            Nombre = "Saludable",
+                            Orden = 13
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Categoria = "COCINA",
+                            Codigo = "cocina.postres-cafes",
+                            Nombre = "Postres y cafés",
+                            Orden = 14
+                        },
+                        new
+                        {
+                            Id = 101,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.familiar",
+                            Nombre = "Familiar",
+                            Orden = 1
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.romantico",
+                            Nombre = "Romántico",
+                            Orden = 2
+                        },
+                        new
+                        {
+                            Id = 103,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.casual",
+                            Nombre = "Casual",
+                            Orden = 3
+                        },
+                        new
+                        {
+                            Id = 104,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.amigos",
+                            Nombre = "Con amigos",
+                            Orden = 4
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.trabajar-estudiar",
+                            Nombre = "Para trabajar o estudiar",
+                            Orden = 5
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.aire-libre",
+                            Nombre = "Al aire libre",
+                            Orden = 6
+                        },
+                        new
+                        {
+                            Id = 107,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.tranquilo",
+                            Nombre = "Tranquilo",
+                            Orden = 7
+                        },
+                        new
+                        {
+                            Id = 108,
+                            Categoria = "AMBIENTE",
+                            Codigo = "ambiente.pet-friendly",
+                            Nombre = "Pet friendly",
+                            Orden = 8
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Categoria = "PRECIO",
+                            Codigo = "precio.1",
+                            Detalle = "Menos de $25.000",
+                            Nombre = "$",
+                            Orden = 1
+                        },
+                        new
+                        {
+                            Id = 202,
+                            Categoria = "PRECIO",
+                            Codigo = "precio.2",
+                            Detalle = "De $25.000 a $50.000",
+                            Nombre = "$$",
+                            Orden = 2
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Categoria = "PRECIO",
+                            Codigo = "precio.3",
+                            Detalle = "De $50.000 a $100.000",
+                            Nombre = "$$$",
+                            Orden = 3
+                        },
+                        new
+                        {
+                            Id = 204,
+                            Categoria = "PRECIO",
+                            Codigo = "precio.4",
+                            Detalle = "Más de $100.000",
+                            Nombre = "$$$$",
+                            Orden = 4
+                        },
+                        new
+                        {
+                            Id = 301,
+                            Categoria = "DIETA",
+                            Codigo = "dieta.vegetariana",
+                            Nombre = "Vegetariana",
+                            Orden = 1
+                        },
+                        new
+                        {
+                            Id = 302,
+                            Categoria = "DIETA",
+                            Codigo = "dieta.vegana",
+                            Nombre = "Vegana",
+                            Orden = 2
+                        },
+                        new
+                        {
+                            Id = 303,
+                            Categoria = "DIETA",
+                            Codigo = "dieta.pescetariana",
+                            Nombre = "Pescetariana",
+                            Orden = 3
+                        },
+                        new
+                        {
+                            Id = 401,
+                            Categoria = "RESTRICCION",
+                            Codigo = "restriccion.sin-gluten",
+                            Nombre = "Sin gluten",
+                            Orden = 1
+                        },
+                        new
+                        {
+                            Id = 402,
+                            Categoria = "RESTRICCION",
+                            Codigo = "restriccion.sin-lactosa",
+                            Nombre = "Sin lactosa",
+                            Orden = 2
+                        },
+                        new
+                        {
+                            Id = 403,
+                            Categoria = "RESTRICCION",
+                            Codigo = "restriccion.alergia-frutos-secos",
+                            Nombre = "Alergia a frutos secos",
+                            Orden = 3
+                        },
+                        new
+                        {
+                            Id = 404,
+                            Categoria = "RESTRICCION",
+                            Codigo = "restriccion.alergia-mariscos",
+                            Nombre = "Alergia a mariscos",
+                            Orden = 4
+                        },
+                        new
+                        {
+                            Id = 405,
+                            Categoria = "RESTRICCION",
+                            Codigo = "restriccion.halal",
+                            Nombre = "Halal",
+                            Orden = 5
+                        },
+                        new
+                        {
+                            Id = 406,
+                            Categoria = "RESTRICCION",
+                            Codigo = "restriccion.kosher",
+                            Nombre = "Kosher",
+                            Orden = 6
+                        });
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Perfil.PerfilGastronomico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ActualizadoEn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ComensalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("PasoActual")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComensalId")
+                        .IsUnique();
+
+                    b.ToTable("PerfilesGastronomicos");
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Perfil.SeleccionPerfil", b =>
+                {
+                    b.Property<int>("PerfilGastronomicoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OpcionPerfilId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Peso")
+                        .HasColumnType("float");
+
+                    b.HasKey("PerfilGastronomicoId", "OpcionPerfilId");
+
+                    b.HasIndex("OpcionPerfilId");
+
+                    b.ToTable("SeleccionesPerfil");
+                });
+
             modelBuilder.Entity("Forkly.Api.Models.Users.Usuario", b =>
                 {
                     b.Property<string>("Id")
@@ -246,6 +611,10 @@ namespace Forkly.Api.Migrations
                 {
                     b.HasBaseType("Forkly.Api.Models.Users.Usuario");
 
+                    b.Property<string>("EstadoPerfil")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("Nivel")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -255,6 +624,36 @@ namespace Forkly.Api.Migrations
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("Comensal");
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Perfil.PerfilGastronomico", b =>
+                {
+                    b.HasOne("Forkly.Api.Models.Users.Comensal", "Comensal")
+                        .WithOne("PerfilGastronomico")
+                        .HasForeignKey("Forkly.Api.Models.Perfil.PerfilGastronomico", "ComensalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comensal");
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Perfil.SeleccionPerfil", b =>
+                {
+                    b.HasOne("Forkly.Api.Models.Perfil.OpcionPerfil", "OpcionPerfil")
+                        .WithMany()
+                        .HasForeignKey("OpcionPerfilId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Forkly.Api.Models.Perfil.PerfilGastronomico", "PerfilGastronomico")
+                        .WithMany("Selecciones")
+                        .HasForeignKey("PerfilGastronomicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OpcionPerfil");
+
+                    b.Navigation("PerfilGastronomico");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -306,6 +705,16 @@ namespace Forkly.Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Perfil.PerfilGastronomico", b =>
+                {
+                    b.Navigation("Selecciones");
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Users.Comensal", b =>
+                {
+                    b.Navigation("PerfilGastronomico");
                 });
 #pragma warning restore 612, 618
         }
