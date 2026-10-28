@@ -7,6 +7,9 @@ export type EstadoCuenta = 'VERIFICADA' | 'NO_VERIFICADA' | 'BLOQUEADA';
 // Backend/Models/Enums/NivelComensal.cs
 export type NivelComensal = 'NORMAL' | 'PREMIUM';
 
+// Backend/Models/Enums/EstadoPerfil.cs (configuración del perfil gastronómico, H01.09)
+export type EstadoPerfil = 'PENDIENTE' | 'EN_PROGRESO' | 'COMPLETO' | 'OMITIDO';
+
 // Backend/Models/Users/Usuario.cs. Los campos que vienen de IdentityUser
 // conservan su nombre; PasswordHash nunca sale del backend.
 export interface Usuario {
@@ -23,4 +26,5 @@ export interface Usuario {
 export interface Comensal extends Usuario {
     perfilPublico: boolean;
     nivel: NivelComensal;
+    estadoPerfil: EstadoPerfil;
 }

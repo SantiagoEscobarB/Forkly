@@ -4,6 +4,7 @@ using Forkly.Api.Models.Configuracion;
 using Forkly.Api.Models.Users;
 using Forkly.Api.Service.Auth;
 using Forkly.Api.Service.Email;
+using Forkly.Api.Service.Perfil;
 using Forkly.Api.Service.Recuperacion;
 using Forkly.Api.Service.Verificacion;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IVerificacionService, VerificacionService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
+builder.Services.AddScoped<IPerfilService, PerfilService>();
 
 //Correo (la contraseña del SMTP va en user-secrets: Email:Contrasena)
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.Seccion));

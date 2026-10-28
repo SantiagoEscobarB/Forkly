@@ -16,6 +16,8 @@ namespace Forkly.Api.Models.DTOs.Usuarios
         public bool TwoFactorEnabled { get; set; }
         public bool PerfilPublico { get; set; }
         public NivelComensal Nivel { get; set; }
+        // El frontend lo usa para llevar al usuario a configurar su perfil (H01.09)
+        public EstadoPerfil EstadoPerfil { get; set; }
 
         public static ComensalDTO DesdeEntidad(Comensal comensal) => new()
         {
@@ -27,7 +29,9 @@ namespace Forkly.Api.Models.DTOs.Usuarios
             Estado = comensal.Estado,
             TwoFactorEnabled = comensal.TwoFactorEnabled,
             PerfilPublico = comensal.PerfilPublico,
-            Nivel = comensal.Nivel
+            Nivel = comensal.Nivel,
+            // null = PENDIENTE, que es el primer valor del enum
+            EstadoPerfil = comensal.EstadoPerfil.GetValueOrDefault()
         };
     }
 }
