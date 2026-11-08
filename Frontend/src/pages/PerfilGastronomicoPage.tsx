@@ -22,6 +22,7 @@ const PerfilGastronomicoPage = () => {
     const [guardando, setGuardando] = useState(false);
     const [errores, setErrores] = useState<string[]>([]);
     const [aviso, setAviso] = useState('');
+    const [falloCarga, setFalloCarga] = useState(false);
 
     useEffect(() => {
         let cancelado = false;
@@ -35,6 +36,7 @@ const PerfilGastronomicoPage = () => {
             .catch((error: unknown) => {
                 if (cancelado) return;
                 setErrores(mensajesDeError(error));
+                setFalloCarga(true);
                 setCargando(false);
             });
         return () => {
@@ -75,23 +77,30 @@ const PerfilGastronomicoPage = () => {
                 <p className='mt-1 text-texto-suave'>Cambia tus gustos y restricciones cuando quieras.</p>
             </div>
 
-            {cargando ? (
-                <p className='text-texto-suave'>Cargando tu perfil...</p>
+            {/* Si no se pudo cargar el perfil, solo se muestra el error (H01.09, criterio 17) */}
+            {falloCarga ? (
+                <ErrorMessage errores={errores} />
             ) : (
-                <div className='flex flex-col gap-8 rounded-3xl border border-borde bg-panel/40 p-6'>
-                    {ORDEN_CATEGORIAS.map((categoria) => (
-                        <GrupoOpciones key={categoria} categoria={categoria} opciones={opciones}
-                            seleccion={seleccion} onAlternar={alternarOpcion} deshabilitado={guardando} />
-                    ))}
-                    <AvisoDietas visible={variasDietas} />
-                </div>
-            )}
+                <>
+                    {cargando ? (
+                        <p className='text-texto-suave'>Cargando tu perfil...</p>
+                    ) : (
+                        <div className='flex flex-col gap-8 rounded-3xl border border-borde bg-panel/40 p-6'>
+                            {ORDEN_CATEGORIAS.map((categoria) => (
+                                <GrupoOpciones key={categoria} categoria={categoria} opciones={opciones}
+                                    seleccion={seleccion} onAlternar={alternarOpcion} deshabilitado={guardando} />
+                            ))}
+                            <AvisoDietas visible={variasDietas} />
+                        </div>
+                    )}
 
-            <ErrorMessage errores={errores} />
-            {aviso && <p role='status' className='text-sm text-green-400'>{aviso}</p>}
-            <SubmitButton type='button' onClick={guardar} disabled={cargando || guardando || variasDietas}>
-                {guardando ? 'Guardando...' : 'Guardar cambios'}
-            </SubmitButton>
+                    <ErrorMessage errores={errores} />
+                    {aviso && <p role='status' className='text-sm text-green-400'>{aviso}</p>}
+                    <SubmitButton type='button' onClick={guardar} disabled={cargando || guardando || variasDietas}>
+                        {guardando ? 'Guardando...' : 'Guardar cambios'}
+                    </SubmitButton>
+                </>
+            )}
         </main>
     );
 };

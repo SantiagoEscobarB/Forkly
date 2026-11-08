@@ -1,4 +1,4 @@
-import type { AuthResponse, GoogleAuthResponse, GoogleRegistroRequest, LoginRequest, RegistroRequest } from '../types/auth';
+import type { AuthResponse, LoginRequest, RegistroRequest } from '../types/auth';
 import { apiFetch, apiPost } from './api';
 
 // Llamadas a Backend/Controllers/AuthController.cs. Guardar la sesión le
@@ -14,9 +14,3 @@ export const renovarSesion = () =>
 
 export const registro = (datos: RegistroRequest) =>
     apiPost<AuthResponse>('/api/auth/registro', datos);
-
-export const loginGoogle = (idToken: string) =>
-    apiPost<GoogleAuthResponse>('/api/auth/google', { idToken });
-
-export const registroGoogle = (datos: GoogleRegistroRequest) =>
-    apiPost<AuthResponse>('/api/auth/google/registro', datos);

@@ -32,11 +32,6 @@ namespace Forkly.Api.DAO
             });
 
             builder.Entity<Comensal>()
-                .Property(c => c.Nivel)
-                .HasConversion<string>()
-                .HasMaxLength(20);
-
-            builder.Entity<Comensal>()
                 .Property(c => c.EstadoPerfil)
                 .HasConversion<string>()
                 .HasMaxLength(20);

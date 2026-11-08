@@ -1,7 +1,7 @@
 import type { AuthResponse } from '../types/auth';
 
 // Único lugar que lee y escribe la sesión en el navegador
-const SESION_KEY = 'forkly_sesion';
+export const SESION_KEY = 'forkly_sesion';
 const CODIGO_ENVIADO_KEY = 'forkly_codigo_enviado';
 
 // Evento que avisa al SesionProvider cuando la API rechaza el token (401)

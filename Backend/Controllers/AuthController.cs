@@ -44,10 +44,6 @@ namespace Forkly.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status429TooManyRequests, new { message = ex.Message });
             }
-            catch (CuentaBloqueadaException ex)
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-            }
         }
 
         // El frontend lo llama al abrir la aplicación para mantener la sesión (H01.04).
@@ -59,40 +55,6 @@ namespace Forkly.Api.Controllers
             var result = await _authService.RenovarSesion(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (result == null) return Unauthorized(new { message = "Tu sesión terminó. Inicia sesión de nuevo." });
             return Ok(result);
-        }
-
-        [HttpPost("google")]
-        public async Task<IActionResult> LoginGoogle([FromBody] GoogleLoginDTO dto)
-        {
-            try
-            {
-                return Ok(await _authService.LoginGoogle(dto));
-            }
-            catch (GoogleTokenInvalidoException ex)
-            {
-                return Unauthorized(new { message = ex.Message });
-            }
-            catch (CuentaBloqueadaException ex)
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-            }
-        }
-
-        [HttpPost("google/registro")]
-        public async Task<IActionResult> RegistroGoogle([FromBody] GoogleRegistroDTO dto)
-        {
-            try
-            {
-                return Ok(await _authService.RegistroGoogle(dto));
-            }
-            catch (GoogleTokenInvalidoException ex)
-            {
-                return Unauthorized(new { message = ex.Message });
-            }
-            catch (RegistroException ex)
-            {
-                return BadRequest(new { message = ex.Message, errores = ex.Errores });
-            }
         }
     }
 }

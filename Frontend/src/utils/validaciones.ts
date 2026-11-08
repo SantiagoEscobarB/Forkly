@@ -1,5 +1,4 @@
-// Validaciones compartidas por los formularios de registro (con contraseña y con Google)
-// y por el de restablecer la contraseña
+// Validaciones compartidas por el formulario de registro y por el de restablecer la contraseña
 
 // Mismos caracteres que options.User.AllowedUserNameCharacters en Backend/Program.cs.
 // El guion va escapado porque el navegador evalúa `pattern` con el flag `v`.

@@ -1,6 +1,5 @@
 using Forkly.Api.Interface;
 using Forkly.Api.Models.Configuracion;
-using Forkly.Api.Models.Enums;
 using Forkly.Api.Models.Users;
 using Forkly.Api.Service.Auth;
 using Forkly.Api.Service.Email;
@@ -36,7 +35,7 @@ namespace Forkly.Api.Service.Recuperacion
             var usuario = await _userManager.FindByEmailAsync(email.Trim());
             // Si el correo no está registrado no se hace nada: el controlador responde lo mismo
             // en ambos casos para no revelar qué correos tienen cuenta
-            if (usuario == null || usuario.Estado == EstadoCuenta.BLOQUEADA) return;
+            if (usuario == null) return;
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(usuario);
             var enlace = $"{_frontend.Url.TrimEnd('/')}/restablecer-contrasena" +
@@ -91,7 +90,7 @@ namespace Forkly.Api.Service.Recuperacion
         private async Task<(Usuario, string)> LeerEnlace(string usuarioId, string token)
         {
             var usuario = await _userManager.FindByIdAsync(usuarioId);
-            if (usuario == null || usuario.Estado == EstadoCuenta.BLOQUEADA) throw new EnlaceInvalidoException();
+            if (usuario == null) throw new EnlaceInvalidoException();
 
             try
             {

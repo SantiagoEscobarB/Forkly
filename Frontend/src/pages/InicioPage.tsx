@@ -12,6 +12,8 @@ import type { Perfil } from '../types/perfil';
 const InicioPage = () => {
     const { sesion, cerrarSesion } = useSesion();
     const [perfil, setPerfil] = useState<Perfil | null>(null);
+    // Si las preferencias no se pueden cargar no se muestran la sección ni el botón del perfil (H01.09)
+    const [falloCarga, setFalloCarga] = useState(false);
 
     useEffect(() => {
         let cancelado = false;
@@ -19,25 +21,27 @@ const InicioPage = () => {
             .then((respuesta) => {
                 if (!cancelado) setPerfil(respuesta);
             })
-            .catch(() => { /* sin perfil se muestra el saludo igual */ });
+            .catch(() => {
+                if (!cancelado) setFalloCarga(true);
+            });
         return () => {
             cancelado = true;
         };
     }, []);
-
-    const sinPreferencias = !perfil || perfil.seleccionadas.length === 0;
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-center gap-6 px-4 py-12 text-center'>
             <Logo />
             <h1 className='font-display text-3xl font-bold'>¡Hola, {sesion?.usuario.nombreCompleto}!</h1>
             <p className='text-texto-suave'>Tu cuenta está verificada.</p>
-            <ResumenPerfil perfil={perfil} />
+            {!falloCarga && <ResumenPerfil perfil={perfil} />}
             <div className='flex flex-wrap justify-center gap-3'>
-                <Link to={RUTAS.perfilGastronomico}
-                    className='rounded-full bg-primary px-6 py-3 font-semibold text-fondo transition-colors hover:bg-primary-hover'>
-                    {sinPreferencias ? 'Configurar mi perfil gastronómico' : 'Editar mi perfil gastronómico'}
-                </Link>
+                {perfil && (
+                    <Link to={RUTAS.perfilGastronomico}
+                        className='rounded-full bg-primary px-6 py-3 font-semibold text-fondo transition-colors hover:bg-primary-hover'>
+                        {perfil.seleccionadas.length === 0 ? 'Configurar mi perfil gastronómico' : 'Editar mi perfil gastronómico'}
+                    </Link>
+                )}
                 <button type='button' onClick={cerrarSesion}
                     className='rounded-full border border-borde bg-panel px-6 py-3 font-semibold transition-colors hover:border-primary'>
                     Cerrar sesión
