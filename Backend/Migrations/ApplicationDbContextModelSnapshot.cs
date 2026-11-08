@@ -615,14 +615,6 @@ namespace Forkly.Api.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("Nivel")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("PerfilPublico")
-                        .HasColumnType("bit");
-
                     b.HasDiscriminator().HasValue("Comensal");
                 });
 
