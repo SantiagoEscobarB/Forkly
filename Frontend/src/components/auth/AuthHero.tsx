@@ -1,12 +1,5 @@
 import Logo from '../ui/Logo';
 
-// Placeholder: luego se traerán los valores reales del backend
-const estadisticas = [
-    { valor: '0', etiqueta: 'Restaurantes' },
-    { valor: '0', etiqueta: 'Usuarios' },
-    { valor: '0%', etiqueta: 'Satisfacción' },
-];
-
 // Círculos difuminados que imitan el bokeh de la foto del diseño.
 // Cuando tengamos la imagen, se agrega en assets/ y se pone de fondo aquí.
 const luces = [
@@ -36,15 +29,6 @@ const AuthHero = () => {
                     Recomendaciones personalizadas con IA, diario gastronómico y una comunidad
                     de personas con tus mismos gustos.
                 </p>
-                <div className='flex gap-4'>
-                    {estadisticas.map(({ valor, etiqueta }) => (
-                        <div key={etiqueta}
-                            className='rounded-2xl border border-white/15 bg-white/10 px-5 py-3 text-center backdrop-blur-md'>
-                            <p className='font-display text-2xl font-bold'>{valor}</p>
-                            <p className='text-sm text-white/70'>{etiqueta}</p>
-                        </div>
-                    ))}
-                </div>
                 <p className='text-sm text-white/40'>© {anio} Forkly · Medellín, Colombia</p>
             </div>
         </section>

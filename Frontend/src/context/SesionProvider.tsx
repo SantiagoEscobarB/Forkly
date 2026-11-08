@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { renovarSesion } from '../services/authService';
-import { borrarSesion, EVENTO_SESION_EXPIRADA, guardarSesion, leerSesion, leerToken } from '../services/sesionStorage';
+import { borrarSesion, EVENTO_SESION_EXPIRADA, guardarSesion, leerSesion, leerToken, SESION_KEY } from '../services/sesionStorage';
 import type { AuthResponse } from '../types/auth';
 import type { Comensal } from '../types/usuario';
 import { SesionContext } from './SesionContext';
@@ -15,8 +15,17 @@ const SesionProvider = ({ children }: SesionProviderProps) => {
 
     useEffect(() => {
         const alExpirar = () => setSesion(null);
+        // Otra pestaña cerró la sesión (H01.04): el navegador avisa con el evento 'storage'
+        // cuando se borra la sesión guardada, y esta pestaña pasa al inicio de sesión
+        const alCambiarOtraPestana = (e: StorageEvent) => {
+            if (e.key === SESION_KEY && e.newValue === null) setSesion(null);
+        };
         window.addEventListener(EVENTO_SESION_EXPIRADA, alExpirar);
-        return () => window.removeEventListener(EVENTO_SESION_EXPIRADA, alExpirar);
+        window.addEventListener('storage', alCambiarOtraPestana);
+        return () => {
+            window.removeEventListener(EVENTO_SESION_EXPIRADA, alExpirar);
+            window.removeEventListener('storage', alCambiarOtraPestana);
+        };
     }, []);
 
     // Al abrir la app se renueva el token y se traen los datos actuales del usuario, así la

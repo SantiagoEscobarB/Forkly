@@ -12,23 +12,12 @@ namespace Forkly.Api.Service.Auth
         }
     }
 
-    public class CuentaBloqueadaException : Exception
-    {
-        public CuentaBloqueadaException() : base("Tu cuenta está bloqueada.") { }
-    }
-
-    // Bloqueo temporal por intentos fallidos (H01.04). Es distinto de CuentaBloqueadaException,
-    // que corresponde al estado BLOQUEADA de la cuenta.
+    // Bloqueo temporal por intentos fallidos (H01.04).
     public class AccesoBloqueadoException : Exception
     {
         public AccesoBloqueadoException(int minutosRestantes) : base(
             $"Por seguridad bloqueamos el acceso durante {(int)PoliticaAcceso.DuracionBloqueo.TotalMinutes} minutos " +
             $"tras {PoliticaAcceso.IntentosPermitidos} intentos fallidos. Podrás intentarlo de nuevo en " +
             $"{minutosRestantes} {(minutosRestantes == 1 ? "minuto" : "minutos")}.") { }
-    }
-
-    public class GoogleTokenInvalidoException : Exception
-    {
-        public GoogleTokenInvalidoException() : base("No se pudo verificar tu cuenta de Google. Intenta de nuevo.") { }
     }
 }

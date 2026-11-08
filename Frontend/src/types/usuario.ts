@@ -2,10 +2,7 @@
 // propiedades en camelCase y los enums como texto (JsonStringEnumConverter).
 
 // Backend/Models/Enums/EstadoCuenta.cs
-export type EstadoCuenta = 'VERIFICADA' | 'NO_VERIFICADA' | 'BLOQUEADA';
-
-// Backend/Models/Enums/NivelComensal.cs
-export type NivelComensal = 'NORMAL' | 'PREMIUM';
+export type EstadoCuenta = 'VERIFICADA' | 'NO_VERIFICADA';
 
 // Backend/Models/Enums/EstadoPerfil.cs (configuración del perfil gastronómico, H01.09)
 export type EstadoPerfil = 'PENDIENTE' | 'EN_PROGRESO' | 'COMPLETO' | 'OMITIDO';
@@ -19,12 +16,9 @@ export interface Usuario {
     userName: string;
     fechaNacimiento: string; // DateOnly -> "yyyy-MM-dd"
     estado: EstadoCuenta;
-    twoFactorEnabled: boolean;
 }
 
 // Backend/Models/Users/Comensal.cs
 export interface Comensal extends Usuario {
-    perfilPublico: boolean;
-    nivel: NivelComensal;
     estadoPerfil: EstadoPerfil;
 }

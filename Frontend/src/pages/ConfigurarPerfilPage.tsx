@@ -26,6 +26,7 @@ const ConfigurarPerfilPage = () => {
     const [cargando, setCargando] = useState(true);
     const [guardando, setGuardando] = useState(false);
     const [errores, setErrores] = useState<string[]>([]);
+    const [falloCarga, setFalloCarga] = useState(false);
     // Los avances se envían en orden, uno detrás de otro, para que el último siempre gane
     const cola = useRef<Promise<void>>(Promise.resolve());
 
@@ -43,6 +44,7 @@ const ConfigurarPerfilPage = () => {
             .catch((error: unknown) => {
                 if (cancelado) return;
                 setErrores(mensajesDeError(error));
+                setFalloCarga(true);
                 setCargando(false);
             });
         return () => {
@@ -98,46 +100,53 @@ const ConfigurarPerfilPage = () => {
             )}
             <ProgresoPasos paso={paso} total={TOTAL_PASOS} />
 
-            {cargando ? (
-                <p className='text-texto-suave'>Cargando opciones...</p>
+            {/* Si no se pudo cargar el perfil, solo se muestra el error (H01.09, criterio 4) */}
+            {falloCarga ? (
+                <ErrorMessage errores={errores} />
             ) : (
-                <div className='flex flex-col gap-6'>
-                    {PASOS_PERFIL[paso - 1].map((categoria) => (
-                        <GrupoOpciones key={categoria} categoria={categoria} opciones={opciones}
-                            seleccion={seleccion} onAlternar={alternarOpcion} deshabilitado={guardando} />
-                    ))}
-                    {ultimoPaso && (
-                        <p className='text-sm text-texto-suave'>Si no tienes restricciones, deja todo sin marcar.</p>
+                <>
+                    {cargando ? (
+                        <p className='text-texto-suave'>Cargando opciones...</p>
+                    ) : (
+                        <div className='flex flex-col gap-6'>
+                            {PASOS_PERFIL[paso - 1].map((categoria) => (
+                                <GrupoOpciones key={categoria} categoria={categoria} opciones={opciones}
+                                    seleccion={seleccion} onAlternar={alternarOpcion} deshabilitado={guardando} />
+                            ))}
+                            {ultimoPaso && (
+                                <p className='text-sm text-texto-suave'>Si no tienes restricciones, deja todo sin marcar.</p>
+                            )}
+                            <AvisoDietas visible={ultimoPaso && variasDietas} />
+                        </div>
                     )}
-                    <AvisoDietas visible={ultimoPaso && variasDietas} />
-                </div>
-            )}
 
-            <ErrorMessage errores={errores} />
+                    <ErrorMessage errores={errores} />
 
-            <div className='flex gap-3'>
-                {paso > 1 && (
-                    <button type='button' onClick={() => irAPaso(paso - 1)} disabled={guardando}
-                        className='rounded-full border border-borde bg-panel px-6 py-4 font-semibold transition-colors
-                                   hover:border-primary disabled:opacity-60'>
-                        Atrás
+                    <div className='flex gap-3'>
+                        {paso > 1 && (
+                            <button type='button' onClick={() => irAPaso(paso - 1)} disabled={guardando}
+                                className='rounded-full border border-borde bg-panel px-6 py-4 font-semibold transition-colors
+                                           hover:border-primary disabled:opacity-60'>
+                                Atrás
+                            </button>
+                        )}
+                        {ultimoPaso ? (
+                            <SubmitButton type='button' disabled={cargando || guardando || variasDietas}
+                                onClick={() => ejecutar(() => guardarPerfil({ opciones: seleccion }))}>
+                                {guardando ? 'Guardando...' : 'Guardar perfil'}
+                            </SubmitButton>
+                        ) : (
+                            <SubmitButton type='button' disabled={cargando || guardando} onClick={() => irAPaso(paso + 1)}>
+                                Siguiente
+                            </SubmitButton>
+                        )}
+                    </div>
+                    <button type='button' onClick={() => ejecutar(omitirPerfil)} disabled={guardando}
+                        className='text-sm text-texto-suave hover:text-white'>
+                        Omitir por ahora
                     </button>
-                )}
-                {ultimoPaso ? (
-                    <SubmitButton type='button' disabled={cargando || guardando || variasDietas}
-                        onClick={() => ejecutar(() => guardarPerfil({ opciones: seleccion }))}>
-                        {guardando ? 'Guardando...' : 'Guardar perfil'}
-                    </SubmitButton>
-                ) : (
-                    <SubmitButton type='button' disabled={cargando || guardando} onClick={() => irAPaso(paso + 1)}>
-                        Siguiente
-                    </SubmitButton>
-                )}
-            </div>
-            <button type='button' onClick={() => ejecutar(omitirPerfil)} disabled={guardando}
-                className='text-sm text-texto-suave hover:text-white'>
-                Omitir por ahora
-            </button>
+                </>
+            )}
         </AuthLayout>
     );
 };

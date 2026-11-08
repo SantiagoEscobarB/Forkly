@@ -13,9 +13,6 @@ namespace Forkly.Api.Models.DTOs.Usuarios
         public string UserName { get; set; } = string.Empty;
         public DateOnly FechaNacimiento { get; set; }
         public EstadoCuenta Estado { get; set; }
-        public bool TwoFactorEnabled { get; set; }
-        public bool PerfilPublico { get; set; }
-        public NivelComensal Nivel { get; set; }
         // El frontend lo usa para llevar al usuario a configurar su perfil (H01.09)
         public EstadoPerfil EstadoPerfil { get; set; }
 
@@ -27,9 +24,6 @@ namespace Forkly.Api.Models.DTOs.Usuarios
             UserName = comensal.UserName ?? string.Empty,
             FechaNacimiento = comensal.FechaNacimiento,
             Estado = comensal.Estado,
-            TwoFactorEnabled = comensal.TwoFactorEnabled,
-            PerfilPublico = comensal.PerfilPublico,
-            Nivel = comensal.Nivel,
             // null = PENDIENTE, que es el primer valor del enum
             EstadoPerfil = comensal.EstadoPerfil.GetValueOrDefault()
         };
