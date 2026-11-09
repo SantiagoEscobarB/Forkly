@@ -1,4 +1,5 @@
 using Forkly.Api.Models.Perfil;
+using Forkly.Api.Models.Restaurantes;
 using Forkly.Api.Models.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,10 @@ namespace Forkly.Api.DAO
         public DbSet<OpcionPerfil> OpcionesPerfil { get; set; }
         public DbSet<PerfilGastronomico> PerfilesGastronomicos { get; set; }
         public DbSet<SeleccionPerfil> SeleccionesPerfil { get; set; }
+
+        // Catálogo de restaurantes (FOR-61)
+        public DbSet<Restaurante> Restaurantes { get; set; }
+        public DbSet<RestauranteOpcion> RestauranteOpciones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -70,6 +75,47 @@ namespace Forkly.Api.DAO
                     .WithMany()
                     .HasForeignKey(s => s.OpcionPerfilId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Reglas de las columnas de Restaurantes (FOR-61, criterio 2): ninguna queda vacía
+            // ('' y solo espacios no pasan los CHECK), el teléfono va en grupos de 3, 3 y 4
+            // dígitos y la fuente es una dirección https.
+            builder.Entity<Restaurante>(restaurante =>
+            {
+                restaurante.Property(r => r.Nombre).HasMaxLength(100);
+                restaurante.Property(r => r.Direccion).HasMaxLength(150);
+                restaurante.Property(r => r.Barrio).HasMaxLength(60);
+                restaurante.Property(r => r.Telefono).HasMaxLength(12);
+                restaurante.Property(r => r.FuenteUrl).HasMaxLength(300);
+                // El mismo restaurante no se carga dos veces (criterio 5)
+                restaurante.HasIndex(r => new { r.Nombre, r.Direccion }).IsUnique();
+                restaurante.ToTable(tabla =>
+                {
+                    tabla.HasCheckConstraint("CK_Restaurantes_Nombre", "[Nombre] <> ''");
+                    tabla.HasCheckConstraint("CK_Restaurantes_Direccion", "[Direccion] <> ''");
+                    tabla.HasCheckConstraint("CK_Restaurantes_Barrio", "[Barrio] <> ''");
+                    tabla.HasCheckConstraint("CK_Restaurantes_Telefono",
+                        "[Telefono] LIKE '[0-9][0-9][0-9] [0-9][0-9][0-9] [0-9][0-9][0-9][0-9]'");
+                    tabla.HasCheckConstraint("CK_Restaurantes_FuenteUrl", "[FuenteUrl] LIKE 'https://_%'");
+                });
+                // Ids fijos: la migración los inserta y RestauranteOpciones los referencia
+                restaurante.Property(r => r.Id).ValueGeneratedNever();
+                restaurante.HasData(CatalogoRestaurantes.Restaurantes);
+            });
+
+            builder.Entity<RestauranteOpcion>(opcion =>
+            {
+                opcion.HasKey(o => new { o.RestauranteId, o.OpcionPerfilId });
+                opcion.HasOne(o => o.Restaurante)
+                    .WithMany(r => r.Opciones)
+                    .HasForeignKey(o => o.RestauranteId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                // Una opción del catálogo no se puede borrar mientras un restaurante la use
+                opcion.HasOne(o => o.OpcionPerfil)
+                    .WithMany()
+                    .HasForeignKey(o => o.OpcionPerfilId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                opcion.HasData(CatalogoRestaurantes.Opciones);
             });
         }
     }
