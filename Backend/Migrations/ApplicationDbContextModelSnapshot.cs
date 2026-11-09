@@ -387,6 +387,899 @@ namespace Forkly.Api.Migrations
                     b.ToTable("SeleccionesPerfil");
                 });
 
+            modelBuilder.Entity("Forkly.Api.Models.Restaurantes.Restaurante", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Barrio")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("FuenteUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre", "Direccion")
+                        .IsUnique();
+
+                    b.ToTable("Restaurantes", t =>
+                        {
+                            t.HasCheckConstraint("CK_Restaurantes_Barrio", "[Barrio] <> ''");
+
+                            t.HasCheckConstraint("CK_Restaurantes_Direccion", "[Direccion] <> ''");
+
+                            t.HasCheckConstraint("CK_Restaurantes_FuenteUrl", "[FuenteUrl] LIKE 'https://_%'");
+
+                            t.HasCheckConstraint("CK_Restaurantes_Nombre", "[Nombre] <> ''");
+
+                            t.HasCheckConstraint("CK_Restaurantes_Telefono", "[Telefono] LIKE '[0-9][0-9][0-9] [0-9][0-9][0-9] [0-9][0-9][0-9][0-9]'");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 10 No. 38 - 38",
+                            FuenteUrl = "https://mondongos.com.co/",
+                            Nombre = "Mondongo's",
+                            Telefono = "604 604 8116"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Barrio = "Laureles",
+                            Direccion = "Cra. 73 # Circular 5-6",
+                            FuenteUrl = "https://paneepomodoro.com.co/",
+                            Nombre = "Pane e Pomodoro",
+                            Telefono = "604 322 9679"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Barrio = "El Poblado",
+                            Direccion = "Cra 36 # 10 A - 27",
+                            FuenteUrl = "https://carmenmedellin.com/",
+                            Nombre = "Carmen",
+                            Telefono = "316 625 4896"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 18 Av Las Palmas # 35-50",
+                            FuenteUrl = "https://elrancherito.com.co/restaurantes/",
+                            Nombre = "El Rancherito",
+                            Telefono = "604 444 9576"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Barrio = "El Poblado",
+                            Direccion = "Cr 33 # 8A - 19",
+                            FuenteUrl = "https://www.kampanascocinasdelmundo.com/",
+                            Nombre = "Kampanas Cocinas del Mundo",
+                            Telefono = "300 297 8868"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Barrio = "Centro",
+                            Direccion = "Calle 54 # 47-20",
+                            FuenteUrl = "https://www.casachinajunin.com/",
+                            Nombre = "Casa China Junín",
+                            Telefono = "304 476 8606"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Barrio = "Laureles",
+                            Direccion = "Transversal 39 # 76-41",
+                            FuenteUrl = "https://www.lataqueriacocinamexicana.com/",
+                            Nombre = "La Taquería",
+                            Telefono = "304 352 0880"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Barrio = "Laureles",
+                            Direccion = "Carrera 75 #40 - 10",
+                            FuenteUrl = "https://www.lapampaparrilla.com/reservas/",
+                            Nombre = "La Pampa",
+                            Telefono = "300 423 0283"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Barrio = "Ciudad del Río",
+                            Direccion = "Calle 20 # 43 G-130",
+                            FuenteUrl = "https://malangadeltropico.com/",
+                            Nombre = "Malanga del Trópico",
+                            Telefono = "302 392 3183"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 25A # 1A Sur – 45",
+                            FuenteUrl = "https://natto.com.co/",
+                            Nombre = "Natto",
+                            Telefono = "305 289 0564"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Barrio = "Laureles",
+                            Direccion = "Cl. 39c #73-7",
+                            FuenteUrl = "https://www.semilla.com.co/cafe-laureles",
+                            Nombre = "Semilla Café Coworking",
+                            Telefono = "317 515 9876"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 10c # 29c - 20",
+                            FuenteUrl = "https://dondejuancho.com/",
+                            Nombre = "Donde Juancho",
+                            Telefono = "350 629 5755"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 16 No.28-60",
+                            FuenteUrl = "https://hatoviejo.com/",
+                            Nombre = "Hatoviejo",
+                            Telefono = "312 862 6698"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Barrio = "El Poblado",
+                            Direccion = "Carrera. 33 # 8A - 11",
+                            FuenteUrl = "https://www.kabuki.com.co/",
+                            Nombre = "Kabuki",
+                            Telefono = "301 470 4009"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 8 # 42-33",
+                            FuenteUrl = "https://www.openstreetmap.org/node/2089497823",
+                            Nombre = "Café Zorba",
+                            Telefono = "604 580 4600"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Barrio = "El Poblado",
+                            Direccion = "Cl 26, Cr. 38-21, Int. 101",
+                            FuenteUrl = "https://origincafemenu.netlify.app/",
+                            Nombre = "Origin Café",
+                            Telefono = "333 717 8866"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Barrio = "Laureles",
+                            Direccion = "Calle 35 # 77 – 01",
+                            FuenteUrl = "https://www.lamigueria.com.co/",
+                            Nombre = "La Miguería",
+                            Telefono = "604 448 3327"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Barrio = "El Poblado",
+                            Direccion = "Carrera 32D # 9 – 35",
+                            FuenteUrl = "https://bistrobabette.com/",
+                            Nombre = "Babette",
+                            Telefono = "304 590 3511"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Barrio = "El Poblado",
+                            Direccion = "Carrera 43D No 10-30",
+                            FuenteUrl = "https://elherbario.com/",
+                            Nombre = "Herbario",
+                            Telefono = "604 311 2537"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Barrio = "Laureles",
+                            Direccion = "Carrera 70 No . C3 - 43",
+                            FuenteUrl = "https://mondongos.com.co/",
+                            Nombre = "Mondongo's",
+                            Telefono = "604 604 1677"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Barrio = "El Poblado",
+                            Direccion = "Carrera. 30 # 10C - 228",
+                            FuenteUrl = "https://www.lapampaparrilla.com/reservas/",
+                            Nombre = "La Pampa",
+                            Telefono = "304 681 4353"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 18 #35 - 69",
+                            FuenteUrl = "https://www.lapampaparrilla.com/reservas/",
+                            Nombre = "La Pampa",
+                            Telefono = "315 794 4033"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Barrio = "Laureles",
+                            Direccion = "Cra. 73 Circular 4 - 13",
+                            FuenteUrl = "https://www.lapampaparrilla.com/reservas/",
+                            Nombre = "La Pampa",
+                            Telefono = "324 590 7391"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Barrio = "Laureles",
+                            Direccion = "Transversal 39 # 76-41",
+                            FuenteUrl = "https://www.kabuki.com.co/",
+                            Nombre = "Kabuki",
+                            Telefono = "304 352 0880"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Barrio = "Centro",
+                            Direccion = "Carrera 47 No.52-17",
+                            FuenteUrl = "https://hatoviejo.com/",
+                            Nombre = "Hatoviejo",
+                            Telefono = "311 631 1324"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Barrio = "El Poblado",
+                            Direccion = "Calle 6 sur No 43a 227 Piso 4",
+                            FuenteUrl = "https://hatoviejo.com/",
+                            Nombre = "Hatoviejo",
+                            Telefono = "321 702 6559"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Barrio = "Laureles",
+                            Direccion = "Calle 38 # 79 -46",
+                            FuenteUrl = "https://malangadeltropico.com/",
+                            Nombre = "Malanga del Trópico",
+                            Telefono = "311 782 3084"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Barrio = "Belén",
+                            Direccion = "Calle 30 A # 82 A 26",
+                            FuenteUrl = "https://elrancherito.com.co/restaurantes/",
+                            Nombre = "El Rancherito",
+                            Telefono = "604 444 9576"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Barrio = "Estadio",
+                            Direccion = "Calle 49 # 77 – 35",
+                            FuenteUrl = "https://www.lamigueria.com.co/",
+                            Nombre = "La Miguería",
+                            Telefono = "604 448 3327"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Barrio = "Ciudad del Río",
+                            Direccion = "Cl. 20 #43G-144 local 116",
+                            FuenteUrl = "https://natto.com.co/",
+                            Nombre = "Natto",
+                            Telefono = "305 332 5866"
+                        });
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Restaurantes.RestauranteOpcion", b =>
+                {
+                    b.Property<int>("RestauranteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OpcionPerfilId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RestauranteId", "OpcionPerfilId");
+
+                    b.HasIndex("OpcionPerfilId");
+
+                    b.ToTable("RestauranteOpciones");
+
+                    b.HasData(
+                        new
+                        {
+                            RestauranteId = 1,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 1,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 1,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 2,
+                            OpcionPerfilId = 3
+                        },
+                        new
+                        {
+                            RestauranteId = 2,
+                            OpcionPerfilId = 9
+                        },
+                        new
+                        {
+                            RestauranteId = 2,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 2,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 2,
+                            OpcionPerfilId = 106
+                        },
+                        new
+                        {
+                            RestauranteId = 2,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 3,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 3,
+                            OpcionPerfilId = 102
+                        },
+                        new
+                        {
+                            RestauranteId = 3,
+                            OpcionPerfilId = 204
+                        },
+                        new
+                        {
+                            RestauranteId = 4,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 4,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 4,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 4,
+                            OpcionPerfilId = 108
+                        },
+                        new
+                        {
+                            RestauranteId = 4,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 5,
+                            OpcionPerfilId = 7
+                        },
+                        new
+                        {
+                            RestauranteId = 5,
+                            OpcionPerfilId = 6
+                        },
+                        new
+                        {
+                            RestauranteId = 5,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 5,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 6,
+                            OpcionPerfilId = 5
+                        },
+                        new
+                        {
+                            RestauranteId = 6,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 6,
+                            OpcionPerfilId = 202
+                        },
+                        new
+                        {
+                            RestauranteId = 7,
+                            OpcionPerfilId = 2
+                        },
+                        new
+                        {
+                            RestauranteId = 7,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 7,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 7,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 8,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 8,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 8,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 8,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 9,
+                            OpcionPerfilId = 10
+                        },
+                        new
+                        {
+                            RestauranteId = 9,
+                            OpcionPerfilId = 102
+                        },
+                        new
+                        {
+                            RestauranteId = 9,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 9,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 10,
+                            OpcionPerfilId = 13
+                        },
+                        new
+                        {
+                            RestauranteId = 10,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 10,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 11,
+                            OpcionPerfilId = 14
+                        },
+                        new
+                        {
+                            RestauranteId = 11,
+                            OpcionPerfilId = 105
+                        },
+                        new
+                        {
+                            RestauranteId = 11,
+                            OpcionPerfilId = 107
+                        },
+                        new
+                        {
+                            RestauranteId = 11,
+                            OpcionPerfilId = 202
+                        },
+                        new
+                        {
+                            RestauranteId = 12,
+                            OpcionPerfilId = 8
+                        },
+                        new
+                        {
+                            RestauranteId = 12,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 12,
+                            OpcionPerfilId = 202
+                        },
+                        new
+                        {
+                            RestauranteId = 13,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 13,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 13,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 14,
+                            OpcionPerfilId = 4
+                        },
+                        new
+                        {
+                            RestauranteId = 14,
+                            OpcionPerfilId = 6
+                        },
+                        new
+                        {
+                            RestauranteId = 14,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 14,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 15,
+                            OpcionPerfilId = 9
+                        },
+                        new
+                        {
+                            RestauranteId = 15,
+                            OpcionPerfilId = 12
+                        },
+                        new
+                        {
+                            RestauranteId = 15,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 15,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 16,
+                            OpcionPerfilId = 14
+                        },
+                        new
+                        {
+                            RestauranteId = 16,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 16,
+                            OpcionPerfilId = 202
+                        },
+                        new
+                        {
+                            RestauranteId = 17,
+                            OpcionPerfilId = 14
+                        },
+                        new
+                        {
+                            RestauranteId = 17,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 17,
+                            OpcionPerfilId = 201
+                        },
+                        new
+                        {
+                            RestauranteId = 18,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 18,
+                            OpcionPerfilId = 102
+                        },
+                        new
+                        {
+                            RestauranteId = 18,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 18,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 19,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 19,
+                            OpcionPerfilId = 102
+                        },
+                        new
+                        {
+                            RestauranteId = 19,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 19,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 20,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 20,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 20,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 21,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 21,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 21,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 21,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 22,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 22,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 22,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 22,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 23,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 23,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 23,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 23,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 24,
+                            OpcionPerfilId = 4
+                        },
+                        new
+                        {
+                            RestauranteId = 24,
+                            OpcionPerfilId = 6
+                        },
+                        new
+                        {
+                            RestauranteId = 24,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 24,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 25,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 25,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 25,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 26,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 26,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 26,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 27,
+                            OpcionPerfilId = 10
+                        },
+                        new
+                        {
+                            RestauranteId = 27,
+                            OpcionPerfilId = 102
+                        },
+                        new
+                        {
+                            RestauranteId = 27,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 27,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 28,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 28,
+                            OpcionPerfilId = 11
+                        },
+                        new
+                        {
+                            RestauranteId = 28,
+                            OpcionPerfilId = 101
+                        },
+                        new
+                        {
+                            RestauranteId = 28,
+                            OpcionPerfilId = 104
+                        },
+                        new
+                        {
+                            RestauranteId = 28,
+                            OpcionPerfilId = 203
+                        },
+                        new
+                        {
+                            RestauranteId = 29,
+                            OpcionPerfilId = 14
+                        },
+                        new
+                        {
+                            RestauranteId = 29,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 29,
+                            OpcionPerfilId = 201
+                        },
+                        new
+                        {
+                            RestauranteId = 30,
+                            OpcionPerfilId = 13
+                        },
+                        new
+                        {
+                            RestauranteId = 30,
+                            OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 30,
+                            OpcionPerfilId = 203
+                        });
+                });
+
             modelBuilder.Entity("Forkly.Api.Models.Users.Usuario", b =>
                 {
                     b.Property<string>("Id")
@@ -648,6 +1541,25 @@ namespace Forkly.Api.Migrations
                     b.Navigation("PerfilGastronomico");
                 });
 
+            modelBuilder.Entity("Forkly.Api.Models.Restaurantes.RestauranteOpcion", b =>
+                {
+                    b.HasOne("Forkly.Api.Models.Perfil.OpcionPerfil", "OpcionPerfil")
+                        .WithMany()
+                        .HasForeignKey("OpcionPerfilId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Forkly.Api.Models.Restaurantes.Restaurante", "Restaurante")
+                        .WithMany("Opciones")
+                        .HasForeignKey("RestauranteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OpcionPerfil");
+
+                    b.Navigation("Restaurante");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -702,6 +1614,11 @@ namespace Forkly.Api.Migrations
             modelBuilder.Entity("Forkly.Api.Models.Perfil.PerfilGastronomico", b =>
                 {
                     b.Navigation("Selecciones");
+                });
+
+            modelBuilder.Entity("Forkly.Api.Models.Restaurantes.Restaurante", b =>
+                {
+                    b.Navigation("Opciones");
                 });
 
             modelBuilder.Entity("Forkly.Api.Models.Users.Comensal", b =>
