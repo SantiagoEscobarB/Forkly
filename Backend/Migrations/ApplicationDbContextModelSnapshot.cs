@@ -575,9 +575,9 @@ namespace Forkly.Api.Migrations
                         {
                             Id = 16,
                             Barrio = "El Poblado",
-                            Direccion = "Cl 26, Cr. 38-21, Int. 101",
-                            FuenteUrl = "https://origincafemenu.netlify.app/",
-                            Nombre = "Origin Café",
+                            Direccion = "Cra. 33 #7-69",
+                            FuenteUrl = "https://www.origincafecol.com/",
+                            Nombre = "Origin",
                             Telefono = "333 717 8866"
                         },
                         new
@@ -1011,12 +1011,22 @@ namespace Forkly.Api.Migrations
                         new
                         {
                             RestauranteId = 16,
+                            OpcionPerfilId = 1
+                        },
+                        new
+                        {
+                            RestauranteId = 16,
                             OpcionPerfilId = 14
                         },
                         new
                         {
                             RestauranteId = 16,
                             OpcionPerfilId = 103
+                        },
+                        new
+                        {
+                            RestauranteId = 16,
+                            OpcionPerfilId = 108
                         },
                         new
                         {
