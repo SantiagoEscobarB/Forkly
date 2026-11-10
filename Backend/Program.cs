@@ -6,6 +6,7 @@ using Forkly.Api.Service.Auth;
 using Forkly.Api.Service.Email;
 using Forkly.Api.Service.Perfil;
 using Forkly.Api.Service.Recuperacion;
+using Forkly.Api.Service.Restaurantes;
 using Forkly.Api.Service.Verificacion;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,7 @@ builder.Services.AddScoped<IVerificacionService, VerificacionService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
 builder.Services.AddScoped<IPerfilService, PerfilService>();
+builder.Services.AddScoped<IRestauranteService, RestauranteService>();
 
 //Correo (la contraseña del SMTP va en user-secrets: Email:Contrasena)
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.Seccion));
