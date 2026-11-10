@@ -51,8 +51,8 @@ namespace Forkly.Api.DAO
             // Su web oficial (cafezorba.com.co) no publica teléfono; su ficha en OpenStreetMap sí
             Establecimiento(15, "Café Zorba", "Calle 8 # 42-33", "El Poblado", "604 580 4600",
                 "https://www.openstreetmap.org/node/2089497823"),
-            Establecimiento(16, "Origin Café", "Cl 26, Cr. 38-21, Int. 101", "El Poblado", "333 717 8866",
-                "https://origincafemenu.netlify.app/"),
+            Establecimiento(16, "Origin", "Cra. 33 #7-69", "El Poblado", "333 717 8866",
+                "https://www.origincafecol.com/"),
             Establecimiento(17, "La Miguería", "Calle 35 # 77 – 01", "Laureles", "604 448 3327",
                 "https://www.lamigueria.com.co/"),
             Establecimiento(18, "Babette", "Carrera 32D # 9 – 35", "El Poblado", "304 590 3511",
@@ -120,8 +120,9 @@ namespace Forkly.Api.DAO
             .. Clasificar(14, ["cocina.japonesa", "cocina.peruana"], ["ambiente.amigos"], "precio.3"),
             // Pizza de $44.000 a $54.000 + gaseosa $14.000; carta sin carne con opciones veganas, reservas para grupos
             .. Clasificar(15, ["cocina.pizza", "cocina.vegetariana-vegana"], ["ambiente.amigos"], "precio.3"),
-            // Platos de $17.900 a $27.900 (casi todos de $23.900 o más) + americano $6.900; café de brunch
-            .. Clasificar(16, ["cocina.postres-cafes"], ["ambiente.casual"], "precio.2"),
+            // Desayunos de $27.000 a $30.000 y bowls de $28.000 a $43.000 + americano $7.000 o jugo $14.000;
+            // café-restaurante de origen colombiano (tamales, calentado, chicharrón) con postres para mascotas
+            .. Clasificar(16, ["cocina.colombiana", "cocina.postres-cafes"], ["ambiente.casual", "ambiente.pet-friendly"], "precio.2"),
             // Calzoni de $9.000 a $13.500 o pastel de $5.000 a $8.400 + bebida; panadería y repostería
             .. Clasificar(17, ["cocina.postres-cafes"], ["ambiente.casual"], "precio.1"),
             // Platos fuertes de $46.000 a $95.000 (casi todos de $69.000 a $79.000) + bebida; "lugar para una cita",
