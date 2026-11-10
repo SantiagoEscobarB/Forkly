@@ -8,7 +8,8 @@ import { obtenerPerfil } from '../services/perfilService';
 import type { Perfil } from '../types/perfil';
 
 // Placeholder hasta diseñar el inicio de la app. Muestra las preferencias guardadas,
-// que se restauran al iniciar sesión (H01.04), y lleva a los ajustes del perfil (H01.09).
+// que se restauran al iniciar sesión (H01.04), y lleva a los ajustes del perfil (H01.09)
+// y a la búsqueda de restaurantes (FOR-62).
 const InicioPage = () => {
     const { sesion, cerrarSesion } = useSesion();
     const [perfil, setPerfil] = useState<Perfil | null>(null);
@@ -42,6 +43,11 @@ const InicioPage = () => {
                         {perfil.seleccionadas.length === 0 ? 'Configurar mi perfil gastronómico' : 'Editar mi perfil gastronómico'}
                     </Link>
                 )}
+                {/* FOR-62, criterio 1: siempre visible, también mientras cargan o si fallan las preferencias */}
+                <Link to={RUTAS.restaurantes}
+                    className='rounded-full border border-borde bg-panel px-6 py-3 font-semibold transition-colors hover:border-primary'>
+                    Explorar restaurantes
+                </Link>
                 <button type='button' onClick={cerrarSesion}
                     className='rounded-full border border-borde bg-panel px-6 py-3 font-semibold transition-colors hover:border-primary'>
                     Cerrar sesión
