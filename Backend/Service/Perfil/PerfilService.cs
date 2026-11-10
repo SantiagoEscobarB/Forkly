@@ -109,7 +109,7 @@ namespace Forkly.Api.Service.Perfil
             // H01.10, criterio 2: solo un tipo de dieta
             if (opciones.Count(o => o.Categoria == CategoriaOpcion.DIETA) > 1)
                 throw new PerfilInvalidoException(
-                    "Elegiste más de un tipo de dieta. Elige solo una: vegetariana, vegana o pescetariana.");
+                       "Elegiste más de un tipo de dieta. Deja solo una (vegetariana, vegana o pescetariana) para poder guardar.");
 
             return Ordenar(opciones).ToList();
         }
