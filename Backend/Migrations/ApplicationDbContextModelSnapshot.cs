@@ -37,10 +37,6 @@ namespace Forkly.Api.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<string>("Detalle")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -238,8 +234,7 @@ namespace Forkly.Api.Migrations
                             Id = 201,
                             Categoria = "PRECIO",
                             Codigo = "precio.1",
-                            Detalle = "Menos de $25.000",
-                            Nombre = "$",
+                            Nombre = "Menos de $25.000",
                             Orden = 1
                         },
                         new
@@ -247,8 +242,7 @@ namespace Forkly.Api.Migrations
                             Id = 202,
                             Categoria = "PRECIO",
                             Codigo = "precio.2",
-                            Detalle = "De $25.000 a $50.000",
-                            Nombre = "$$",
+                            Nombre = "De $25.000 a $49.999",
                             Orden = 2
                         },
                         new
@@ -256,8 +250,7 @@ namespace Forkly.Api.Migrations
                             Id = 203,
                             Categoria = "PRECIO",
                             Codigo = "precio.3",
-                            Detalle = "De $50.000 a $100.000",
-                            Nombre = "$$$",
+                            Nombre = "De $50.000 a $99.999",
                             Orden = 3
                         },
                         new
@@ -265,8 +258,7 @@ namespace Forkly.Api.Migrations
                             Id = 204,
                             Categoria = "PRECIO",
                             Codigo = "precio.4",
-                            Detalle = "Más de $100.000",
-                            Nombre = "$$$$",
+                            Nombre = "$100.000 o más",
                             Orden = 4
                         },
                         new

@@ -8,7 +8,6 @@ export type CategoriaOpcion = 'COCINA' | 'AMBIENTE' | 'PRECIO' | 'DIETA' | 'REST
 export interface OpcionPerfil {
     codigo: string; // p. ej. "cocina.italiana"
     nombre: string;
-    detalle: string | null; // p. ej. el rango en pesos de "$$"
     categoria: CategoriaOpcion;
 }
 

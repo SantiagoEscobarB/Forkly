@@ -21,13 +21,6 @@ const SelectorOpciones = ({ opciones, seleccion, onAlternar, deshabilitado = fal
                                         ? 'border-primary bg-primary text-fondo'
                                         : 'border-borde bg-panel text-white hover:border-primary'}`}>
                         {opcion.nombre}
-                        {/* El espacio va como texto para que el nombre accesible sea "$$ De $25.000 a $50.000" */}
-                        {opcion.detalle && ' '}
-                        {opcion.detalle && (
-                            <span className={`ml-1 font-normal ${elegida ? 'text-fondo/80' : 'text-texto-suave'}`}>
-                                {opcion.detalle}
-                            </span>
-                        )}
                     </button>
                 );
             })}

@@ -12,8 +12,6 @@ namespace Forkly.Api.Models.Perfil
         // Identificador estable que usa el frontend, p. ej. "cocina.italiana"
         public string Codigo { get; set; } = string.Empty;
         public string Nombre { get; set; } = string.Empty;
-        // Texto de apoyo, p. ej. el rango en pesos de "$$"
-        public string? Detalle { get; set; }
         public int Orden { get; set; }
     }
 }
