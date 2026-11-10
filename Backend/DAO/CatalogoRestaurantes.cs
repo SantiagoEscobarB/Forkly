@@ -85,7 +85,7 @@ namespace Forkly.Api.DAO
 
         // Tipos de cocina, ambientes y rango de precio de cada restaurante, con el Codigo de la
         // opción en CatalogoPerfil. Rangos: precio.1 menos de $25.000, precio.2 de $25.000 a
-        // $50.000, precio.3 de $50.000 a $100.000 y precio.4 más de $100.000.
+        // $49.999, precio.3 de $50.000 a $99.999 y precio.4 $100.000 o más.
         public static readonly RestauranteOpcion[] Opciones =
         [
             // Mondongo $58.500 (platos típicos de $42.000 a $74.000) + jugo $12.000; menú infantil

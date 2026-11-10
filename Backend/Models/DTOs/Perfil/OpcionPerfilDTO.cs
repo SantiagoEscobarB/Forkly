@@ -8,14 +8,12 @@ namespace Forkly.Api.Models.DTOs.Perfil
     {
         public string Codigo { get; set; } = string.Empty;
         public string Nombre { get; set; } = string.Empty;
-        public string? Detalle { get; set; }
         public CategoriaOpcion Categoria { get; set; }
 
         public static OpcionPerfilDTO DesdeEntidad(OpcionPerfil opcion) => new()
         {
             Codigo = opcion.Codigo,
             Nombre = opcion.Nombre,
-            Detalle = opcion.Detalle,
             Categoria = opcion.Categoria
         };
     }

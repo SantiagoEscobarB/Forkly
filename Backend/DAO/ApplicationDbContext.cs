@@ -46,7 +46,6 @@ namespace Forkly.Api.DAO
                 opcion.Property(o => o.Categoria).HasConversion<string>().HasMaxLength(20);
                 opcion.Property(o => o.Codigo).HasMaxLength(60);
                 opcion.Property(o => o.Nombre).HasMaxLength(60);
-                opcion.Property(o => o.Detalle).HasMaxLength(100);
                 opcion.HasIndex(o => o.Codigo).IsUnique();
                 // Ids fijos: la migración los inserta y las selecciones los referencian
                 opcion.Property(o => o.Id).ValueGeneratedNever();

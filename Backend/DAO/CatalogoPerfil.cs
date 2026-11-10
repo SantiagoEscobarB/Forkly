@@ -37,11 +37,11 @@ namespace Forkly.Api.DAO
             Opcion(107, CategoriaOpcion.AMBIENTE, "ambiente.tranquilo", "Tranquilo", 7),
             Opcion(108, CategoriaOpcion.AMBIENTE, "ambiente.pet-friendly", "Pet friendly", 8),
 
-            // Rangos de precio por persona
-            Opcion(201, CategoriaOpcion.PRECIO, "precio.1", "$", 1, "Menos de $25.000"),
-            Opcion(202, CategoriaOpcion.PRECIO, "precio.2", "$$", 2, "De $25.000 a $50.000"),
-            Opcion(203, CategoriaOpcion.PRECIO, "precio.3", "$$$", 3, "De $50.000 a $100.000"),
-            Opcion(204, CategoriaOpcion.PRECIO, "precio.4", "$$$$", 4, "Más de $100.000"),
+            // Rangos de precio por persona: cada valor cae en un solo rango
+            Opcion(201, CategoriaOpcion.PRECIO, "precio.1", "Menos de $25.000", 1),
+            Opcion(202, CategoriaOpcion.PRECIO, "precio.2", "De $25.000 a $49.999", 2),
+            Opcion(203, CategoriaOpcion.PRECIO, "precio.3", "De $50.000 a $99.999", 3),
+            Opcion(204, CategoriaOpcion.PRECIO, "precio.4", "$100.000 o más", 4),
 
             // Tipos de dieta: solo se puede elegir uno (H01.10, criterio 2)
             Opcion(301, CategoriaOpcion.DIETA, "dieta.vegetariana", "Vegetariana", 1),
@@ -58,13 +58,12 @@ namespace Forkly.Api.DAO
         ];
 
         private static OpcionPerfil Opcion(int id, CategoriaOpcion categoria, string codigo, string nombre,
-            int orden, string? detalle = null) => new()
+            int orden) => new()
         {
             Id = id,
             Categoria = categoria,
             Codigo = codigo,
             Nombre = nombre,
-            Detalle = detalle,
             Orden = orden
         };
     }
